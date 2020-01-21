@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Mapa climatico</title>
+    <style>
+        .ciutat {
+            background-color: blue;
+            width: 20px;
+            height: 20px;
+            border-radius: 100%;
+            position: absolute;
+            z-index: 1;
+        }
+
+        img {
+            width: 1000px;
+            height: 500px;
+            position: absolute;
+            z-index: -1;
+        }
+    </style>
+</head>
+
+<body>
+    <img id="mapa" src="mapa_mallorca.jpg" alt="mapa">
+    <div id="ciutats"></div>
+</body>
+
+<script>
+
+    
+
+    window.onload = function() {
+        var ciutats = [["Andratx", 100, 275], ["Palma", 286, 275], ["Algaida", 552, 282], ["Ariany", 645, 225], ["Capdepera", 920, 163]];
+        //Add a Ciutats
+        for (var i = ciutats.length - 1; i >= 0; i--) {
+            ciutat = document.createElement("div");
+            ciutat.className = "ciutat";
+            ciutat.id = ciutats[i][0];
+            console.log(ciutats[i][1]);
+            ciutat.style.marginLeft = ciutats[i][1].toString() + "px";
+            ciutat.style.marginTop = ciutats[i][2].toString() + "px";
+            console.log(ciutat.style.marginLeft.value);
+            document.getElementById("ciutats").appendChild(ciutat);
+            console.log(ciutat.style.marginLeft.value);
+        }
+        
+    }
+</script>
+
+</html>
