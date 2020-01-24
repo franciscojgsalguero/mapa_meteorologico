@@ -22,19 +22,26 @@
         }
 
         .tabla {
+        	background-color: green;
+        	width: 100px;
+        	height: 130px;
         	margin-left: -20px;
         	margin-top: -120px;
         	display: flex;
         	flex-direction: column;
         	justify-content: space-around;
-        	height: 130px;
+        	align-items: center;
         }
 
-        .tabla div {
+        div.tabla div {
         	display: flex;
         	flex-direction: row;
         	justify-content: space-between;
         	width: 70px;
+        }
+
+        div.tabla img {
+        	z-index: 1;
         }
 
         #maxima {
@@ -124,7 +131,7 @@
     function tabla_show(nom3){
     	ocultar_todo();
        	let pueblo2 = "#"+$(nom3).attr("id").toString()+".tabla";
-    	$(pueblo2).show();
+    	$(pueblo2).show("fast");
     }
 
 </script>
