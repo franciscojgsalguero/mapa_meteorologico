@@ -73,38 +73,49 @@
 <script>
 
     window.onload = function() {
-        var ciutats = [["Andratx", 100, 275, "Assoleiat", 18, 5], ["Palma", 286, 275, "Ennuvolat", 20, -5], ["Algaida", 552, 282, "Pluja", 10, 10], ["Ariany", 645, 225, "Assoleiat", -200, -1000], ["Capdepera", 920, 163, "Pluja", 50, 48]];
+    	var ciutats2 = ["Andratx", "Palma", "Algaida", "Ariany", "Capdepera"];
+        var direccion = "http://localhost:3000/ciutats";
         var temps = ["Assoleiat", "Ennuvolat", "Pluja"];
+
         //Add a Ciutats
-        for (var i = ciutats.length - 1; i >= 0; i--) {
-            ciutat = document.createElement("div");
-            ciutat.className = "ciutat";
-            ciutat.id = ciutats[i][0];
-            ciutat.style.marginLeft = ciutats[i][1].toString() + "px";
-            ciutat.style.marginTop = ciutats[i][2].toString() + "px";            
-            $(ciutat).attr("onmouseover","show("+ciutats[i][0]+")");
-            $(ciutat).attr("onmouseout","hide("+ciutats[i][0]+")");
-            $(ciutat).attr("onclick","tabla_show("+ciutats[i][0]+")");
-            document.getElementById("ciutats").appendChild(ciutat);
-        }
+        for (var i = ciutats2.length -1 ; i >= 0; i--) {
+	        $.ajax({
+				type: 'GET',
+				url: direccion+"?ciutat="+ciutats2[i],
+				dataType: "JSON", // data type expected from server
+				success: function (ciutats) {
+				
+		            ciutat = document.createElement("div");
+		            ciutat.className = "ciutat";
+		            ciutat.id = ciutats[0].ciutat;
+		            ciutat.style.marginLeft = ciutats[0].Posiciox.toString() + "px";
+		            ciutat.style.marginTop = ciutats[0].Posicioy.toString() + "px";            
+		            $(ciutat).attr("onmouseover","show_elemento("+ciutats[0].ciutat+")");
+		            $(ciutat).attr("onmouseout","hide_elemento("+ciutats[0].ciutat+")");
+		            $(ciutat).attr("onclick","tabla_show("+ciutats[0].ciutat+")");
+		            document.getElementById("ciutats").appendChild(ciutat);
 
-        for (var i = ciutats.length - 1; i >= 0; i--) {
-        	nom = document.createElement("div");
-            $(nom).addClass("nom");
-            $(nom).attr("id",ciutats[i][0]);
-            nom.innerHTML = ciutats[i][0];
-            document.getElementById(ciutats[i][0]).appendChild(nom);
-            $(".nom").hide();
-        }
 
-        for (var i = ciutats.length - 1; i >= 0; i--) {
-        	let tabla = document.createElement("div");
-	    	$(tabla).addClass("tabla");
-	    	$(tabla).attr("id", ciutats[i][0]);
-	        tabla.innerHTML = "<h2>"+ ciutats[i][0] + "</h2><img src='"+ciutats[i][3]+".png' Alt= "+ciutats[i][3]+"><div id ='temps' class= '"+ciutats[i][3]+"'><div id='maxima'>"+ciutats[i][4]+"</div><div id='minima'>"+ciutats[i][5]+"</div></div>";
-	        document.getElementById(ciutats[i][0]).appendChild(tabla);
-	        $(".tabla").hide();
-        }
+		        	nom = document.createElement("div");
+		            $(nom).addClass("nom");
+		            $(nom).attr("id",ciutats[0].ciutat);
+		            nom.innerHTML = ciutats[0].ciutat;
+		            document.getElementById(ciutats[0].ciutat).appendChild(nom);
+		            $(".nom").hide();
+
+
+		        	let tabla = document.createElement("div");
+			    	$(tabla).addClass("tabla");
+			    	$(tabla).attr("id", ciutats[0].ciutat);
+			        tabla.innerHTML = "<h2>"+ ciutats[0].ciutat + "</h2><img src='"+ciutats[0].temps+".png' Alt= "+ciutats[0].temps+"><div id ='temps' class= '"+ciutats[0].temps+"'><div id='maxima'>"+ciutats[0].tmax+"</div><div id='minima'>"+ciutats[0].tmin+"</div></div>";
+			        document.getElementById(ciutats[0].ciutat).appendChild(tabla);
+			        $(".tabla").hide();
+			    },
+				error: function(error) {
+					console.log('Error: ' + error);
+				}
+			});
+    	}
     }
 
     function ocultar_todo() {
@@ -118,12 +129,12 @@
     	}
     }
 
-    function show(nom1){
+    function show_elemento(nom1){
     	let pueblo = "#"+$(nom1).attr("id").toString();
     	$(pueblo+".nom").show();
     }
 
-    function hide(nom2){
+    function hide_elemento(nom2){
     	let pueblo = "#"+$(nom2).attr("id").toString();
     	$(pueblo+".nom").hide("slow");
     }
