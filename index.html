@@ -3,6 +3,7 @@
 
 <head>
     <title>Mapa climatico</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <style>
         .ciutat {
             background-color: blue;
@@ -13,40 +14,124 @@
             z-index: 1;
         }
 
+        .nom{
+        	width: 20px;
+        	height: 20px;
+        	margin-left: -10px;
+        	margin-top: -30px;
+        }
+
+        .tabla {
+        	margin-left: -20px;
+        	margin-top: -120px;
+        	display: flex;
+        	flex-direction: column;
+        	justify-content: space-around;
+        	height: 130px;
+        }
+
+        .tabla div {
+        	display: flex;
+        	flex-direction: row;
+        	justify-content: space-between;
+        	width: 70px;
+        }
+
+        #maxima {
+        	color: red;
+        }
+
+        #minima {
+        	color: blue;
+        }
+
         img {
             width: 1000px;
             height: 500px;
             position: absolute;
             z-index: -1;
         }
+
+        h2 {
+        	margin: 0px;
+        }
+
+        div div img {
+        	width: 30px;
+            height: 30px;
+        }
     </style>
 </head>
 
-<body>
-    <img id="mapa" src="mapa_mallorca.jpg" alt="mapa">
-    <div id="ciutats"></div>
-</body>
-
 <script>
 
-    
-
     window.onload = function() {
-        var ciutats = [["Andratx", 100, 275], ["Palma", 286, 275], ["Algaida", 552, 282], ["Ariany", 645, 225], ["Capdepera", 920, 163]];
+        var ciutats = [["Andratx", 100, 275, "Assoleiat", 18, 5], ["Palma", 286, 275, "Ennuvolat", 20, -5], ["Algaida", 552, 282, "Pluja", 10, 10], ["Ariany", 645, 225, "Assoleiat", -200, -1000], ["Capdepera", 920, 163, "Pluja", 50, 48]];
+        var temps = ["Assoleiat", "Ennuvolat", "Pluja"];
         //Add a Ciutats
         for (var i = ciutats.length - 1; i >= 0; i--) {
             ciutat = document.createElement("div");
             ciutat.className = "ciutat";
             ciutat.id = ciutats[i][0];
-            console.log(ciutats[i][1]);
             ciutat.style.marginLeft = ciutats[i][1].toString() + "px";
-            ciutat.style.marginTop = ciutats[i][2].toString() + "px";
-            console.log(ciutat.style.marginLeft.value);
+            ciutat.style.marginTop = ciutats[i][2].toString() + "px";            
+            $(ciutat).attr("onmouseover","show("+ciutats[i][0]+")");
+            $(ciutat).attr("onmouseout","hide("+ciutats[i][0]+")");
+            $(ciutat).attr("onclick","tabla_show("+ciutats[i][0]+")");
             document.getElementById("ciutats").appendChild(ciutat);
-            console.log(ciutat.style.marginLeft.value);
         }
-        
+
+        for (var i = ciutats.length - 1; i >= 0; i--) {
+        	nom = document.createElement("div");
+            $(nom).addClass("nom");
+            $(nom).attr("id",ciutats[i][0]);
+            nom.innerHTML = ciutats[i][0];
+            document.getElementById(ciutats[i][0]).appendChild(nom);
+            $(".nom").hide();
+        }
+
+        for (var i = ciutats.length - 1; i >= 0; i--) {
+        	let tabla = document.createElement("div");
+	    	$(tabla).addClass("tabla");
+	    	$(tabla).attr("id", ciutats[i][0]);
+	        tabla.innerHTML = "<h2>"+ ciutats[i][0] + "</h2><img src='"+ciutats[i][3]+".png' Alt= "+ciutats[i][3]+"><div id ='temps' class= '"+ciutats[i][3]+"'><div id='maxima'>"+ciutats[i][4]+"</div><div id='minima'>"+ciutats[i][5]+"</div></div>";
+	        document.getElementById(ciutats[i][0]).appendChild(tabla);
+	        $(".tabla").hide();
+        }
     }
+
+    function ocultar_todo() {
+    	let ciutats = ["Andratx", "Palma", "Algaida", "Ariany", "Capdepera"];
+    	let tipo = ["nom", "tabla"];
+    	for (var i = tipo.length - 1; i >= 0; i--) {
+    		for (var j = ciutats.length - 1; j >= 0; j--) {
+    			let objeto_ocultar = "#"+ciutats[j] + "." + tipo[i];
+    			$(objeto_ocultar).hide();
+    		}	
+    	}
+    }
+
+    function show(nom1){
+    	let pueblo = "#"+$(nom1).attr("id").toString();
+    	$(pueblo+".nom").show();
+    }
+
+    function hide(nom2){
+    	let pueblo = "#"+$(nom2).attr("id").toString();
+    	$(pueblo+".nom").hide("slow");
+    }
+
+    function tabla_show(nom3){
+    	ocultar_todo();
+       	let pueblo2 = "#"+$(nom3).attr("id").toString()+".tabla";
+    	$(pueblo2).show();
+    }
+
 </script>
+
+<body>
+    <img id="mapa" src="mapa_mallorca.jpg" alt="mapa" onclick="ocultar_todo()">
+    <div id="ciutats"></div>
+</body>
 
 </html>
