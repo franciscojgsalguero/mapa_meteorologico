@@ -1,0 +1,9 @@
+{
+  "ciutats": [
+    { "ciutat": "Andratx", "Posiciox": 100, "Posicioy": 275, "temps": "Assoleiat", "tmax": 18, "tmin": 5 },{ "ciutat": "Palma", "Posiciox": 286, "Posicioy": 275, "temps": "Ennuvolat", "tmax": 20, "tmin": -5 },{ "ciutat": "Algaida", "Posiciox": 552, "Posicioy": 282, "temps": "Pluja", "tmax": 10, "tmin": 10 },{ "ciutat": "Ariany", "Posiciox": 645, "Posicioy": 225, "temps": "Assoleiat", "tmax": -200, "tmin": -1000 },{ "ciutat": "Capdepera", "Posiciox": 920, "Posicioy": 163, "temps": "Pluja", "tmax": 50, "tmin": 48}
+  ],
+  "comments": [
+    { "id": 1, "body": "some comment", "postId": 1 }
+  ],
+  "profile": { "name": "typicode" }
+}
